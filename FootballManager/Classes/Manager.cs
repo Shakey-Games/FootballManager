@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace FootballManager.Classes
 {
-    internal class Manager : Person
+    internal class Coach : Person
     {
         public Club Club { get; set; }
 
-        public Manager(string firstName, string lastName, int age, string nationality, Club club)
+        public Coach(string firstName, string lastName, int age, string nationality, string club)
             : base(firstName, lastName, age, nationality)
         {
-            Club = club;
+
         }
 
         public void ShowClub()

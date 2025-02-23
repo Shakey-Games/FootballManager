@@ -8,7 +8,7 @@ namespace FootballManager.Classes
 {
     internal class Player : Person
     {
-        Club Club { get; set; }
+        public Club Club { get; set; }
 
 
         // Attributes
@@ -18,15 +18,21 @@ namespace FootballManager.Classes
         public int Passing { get; set; }
 
 
-        public Player(string firstName, string lastName, int age, string nationality, int pace, int shooting,
-            int strength, int passing)
+        public Player(string firstName, string lastName, int age, string nationality, string club)
             : base(firstName, lastName, age, nationality)
         {
-            Pace = pace;
-            Shooting = shooting;
-            Strength = strength;
-            Passing = passing;
+
         }
+
+        //public Player(string firstName, string lastName, int age, string nationality, int pace, int shooting,
+        //    int strength, int passing)
+        //    : base(firstName, lastName, age, nationality)
+        //{
+        //    Pace = pace;
+        //    Shooting = shooting;
+        //    Strength = strength;
+        //    Passing = passing;
+        //}
 
 
         public void ShowInfo()
