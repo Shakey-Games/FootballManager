@@ -1,4 +1,4 @@
-﻿using FootballManager.Classes;
+using FootballManager.Classes;
 
 namespace FootballManager
 {
@@ -19,15 +19,15 @@ namespace FootballManager
 
         static void UserDetails()
         {
-            //Console.WriteLine("Please enter your first name:");
-            //string firstName = Console.ReadLine();
-            //Console.WriteLine("Please enter your last name:");
-            //string lastName = Console.ReadLine();
-            //Console.WriteLine("Please enter your age:");
-            //int age = int.Parse(Console.ReadLine());
-            //Console.WriteLine("Please enter your nationality");
-            //string nationality = Console.ReadLine();
-            //Console.Clear();
+            Console.WriteLine("Please enter your first name:");
+            string firstName = Console.ReadLine();
+            Console.WriteLine("Please enter your last name:");
+            string lastName = Console.ReadLine();
+            Console.WriteLine("Please enter your age:");
+            int age = int.Parse(Console.ReadLine());
+            Console.WriteLine("Please enter your nationality");
+            string nationality = Console.ReadLine();
+            Console.Clear();
             int i = 1;
             foreach (Club club in league.Clubs)
             {
@@ -37,8 +37,7 @@ namespace FootballManager
             Console.WriteLine("\nPlease enter the club you want to manage:");
             int clubChoice = int.Parse(Console.ReadLine());
             Club selectedClub = league.Clubs[clubChoice - 1];
-            //Coach user = new Coach(firstName, lastName, age, nationality, null);
-            Coach user = new Coach("Shaker", "Darwazeh", 17, "Syria", null);
+            Coach user = new Coach(firstName, lastName, age, nationality, null);
             selectedClub.SetManager(user);
             league.Coaches.Add(user);
             Console.Clear();
