@@ -6,16 +6,20 @@ using System.Threading.Tasks;
 
 namespace FootballManager.Classes
 {
+
+    
     internal class Club
     {
         public string Name { get; set; }
         public string Stadium { get; set; }
         public List<Player> Players { get; set; }
         public Coach Manager { get; set; }
+        public Tactic Tactic { get; set; }
         public Club(string name)
         {
             Name = name;
             Players = new List<Player>();
+            Tactic = Tactic.Balanced;
         }
 
         public void AddPlayer(Player player)
@@ -48,5 +52,11 @@ namespace FootballManager.Classes
             }
         }
 
+    }
+    enum Tactic
+    {
+        Defensive,
+        Balanced,
+        Attacking
     }
 }
