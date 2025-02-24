@@ -1,5 +1,7 @@
 # FootballManager
 
+UNFINISHED!
+
 Shaker Darwazeh A-Level Computer Science Project. A simple and barebones recreation of the Football Manager computer game.
 
 # Setup
