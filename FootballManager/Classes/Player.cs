@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +9,6 @@ namespace FootballManager.Classes
     internal class Player : Person
     {
         public Club Club { get; set; }
-
 
         // Attributes
         public int Rating { get; set; }
@@ -30,21 +29,36 @@ namespace FootballManager.Classes
             Passing = passing;
             Goalkeeping = goalkeeping;
             Position = position;
-            Rating = (Shooting + Pace + Strength + Passing + Goalkeeping) / 5;
-            //Position = Enum.Parse<Position>(position);
-
+            CalculateRating();
         }
 
-        //public Player(string firstName, string lastName, int age, string nationality, int pace, int shooting,
-        //    int strength, int passing)
-        //    : base(firstName, lastName, age, nationality)
-        //{
-        //    Pace = pace;
-        //    Shooting = shooting;
-        //    Strength = strength;
-        //    Passing = passing;
-        //}
-
+        private void CalculateRating()
+        {
+            switch (Position)
+            {
+                case "GK":
+                    Rating = Goalkeeping;
+                    break;
+                case "CB":
+                    Rating = (Strength + Passing + Pace) / 3;
+                    break;
+                case "FB":
+                    Rating = (Pace + Strength + Passing) / 3;
+                    break;
+                case "MF":
+                    Rating = (Shooting + Pace + Passing) / 3;
+                    break;
+                case "WI":
+                    Rating = (Pace + Shooting + Passing) / 3;
+                    break;
+                case "ST":
+                    Rating = (Shooting + Pace + Strength) / 3;
+                    break;
+                default:
+                    Rating = (Shooting + Pace + Strength + Passing + Goalkeeping) / 5;
+                    break;
+            }
+        }
 
         public void ShowInfo()
         {
