@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -50,6 +50,19 @@ namespace FootballManager.Classes
             }
 
             Console.WriteLine($"{HomeClub.Name} {HomeGoals} - {AwayGoals} {AwayClub.Name}");
+            if (HomeGoals > AwayGoals)
+            {
+                HomeClub.Points += 3;
+            }
+            else if (HomeGoals < AwayGoals)
+            {
+                AwayClub.Points += 3;
+            }
+            else
+            {
+                HomeClub.Points += 1;
+                AwayClub.Points += 1;
+            }
         }
 
 
