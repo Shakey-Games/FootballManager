@@ -460,6 +460,7 @@ namespace FootballManager
 
         static void UserDetails()
         {
+            // test
             //Console.WriteLine("Please enter your first name:");
             //string firstName = Console.ReadLine();
             //Console.WriteLine("Please enter your last name:");
