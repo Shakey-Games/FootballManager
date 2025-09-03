@@ -19,51 +19,58 @@ namespace FootballManager.Classes
         }
         public void PlayMatch()
         {
-            int homeStrength = HomeClub.Players.Sum(p => p.Rating);
-            int awayStrength = AwayClub.Players.Sum(p => p.Rating);
+            // Use only top 11 players (sorted by rating)
+            int homeStrength = HomeClub.Players.OrderByDescending(p => p.Rating).Take(11).Sum(p => p.Rating);
+            int awayStrength = AwayClub.Players.OrderByDescending(p => p.Rating).Take(11).Sum(p => p.Rating);
 
             Random random = new Random();
+
+            // Home advantage bonus
+            homeStrength = (int)(homeStrength * 1.1);
+
             double totalStrength = homeStrength + awayStrength;
 
-            // Calculate the probability of scoring based on strength
+            // Calculate probabilities
             double homeProbability = homeStrength / totalStrength;
             double awayProbability = awayStrength / totalStrength;
 
-            // Simulate goals for home team
             HomeGoals = 0;
-            for (int i = 0; i < 7; i++) // Simulate 7 scoring opportunities
-            {
-                if (random.NextDouble() < homeProbability * 0.5) // Moderate probability to score
-                {
-                    HomeGoals++;
-                }
-            }
-
-            // Simulate goals for away team
             AwayGoals = 0;
-            for (int i = 0; i < 7; i++) // Simulate 7 scoring opportunities
-            {
-                if (random.NextDouble() < awayProbability * 0.5) // Moderate probability to score
-                {
-                    AwayGoals++;
-                }
-            }
 
+            // Factor in tactics
+            int homeChances = GetChancesBasedOnTactic(HomeClub.Tactic);
+            int awayChances = GetChancesBasedOnTactic(AwayClub.Tactic);
+
+            // Simulate scoring
+            for (int i = 0; i < homeChances; i++)
+            {
+                if (random.NextDouble() < homeProbability * 0.5)
+                    HomeGoals++;
+            }
+            for (int i = 0; i < awayChances; i++)
+            {
+                if (random.NextDouble() < awayProbability * 0.5)
+                    AwayGoals++;
+            }
+            if(HomeClub == Program.user.Club || AwayClub == Program.user.Club) { Console.ForegroundColor = ConsoleColor.Yellow; }
             Console.WriteLine($"{HomeClub.Name} {HomeGoals} - {AwayGoals} {AwayClub.Name}");
-            if (HomeGoals > AwayGoals)
+            Console.ResetColor();
+
+            if (HomeGoals > AwayGoals) HomeClub.Points += 3;
+            else if (HomeGoals < AwayGoals) AwayClub.Points += 3;
+            else { HomeClub.Points++; AwayClub.Points++; }
+        }
+
+        private int GetChancesBasedOnTactic(Tactic tactic)
+        {
+            switch (tactic)
             {
-                HomeClub.Points += 3;
-            }
-            else if (HomeGoals < AwayGoals)
-            {
-                AwayClub.Points += 3;
-            }
-            else
-            {
-                HomeClub.Points += 1;
-                AwayClub.Points += 1;
+                case Tactic.Attacking: return 9;
+                case Tactic.Defensive: return 5;
+                default: return 7;
             }
         }
+
 
 
 
