@@ -16,12 +16,14 @@ namespace FootballManager.Classes
         public Coach Manager { get; set; }
         public Tactic Tactic { get; set; }
         public int Points { get; set; }
+        public int Budget { get; set; }
         public Club(string name)
         {
             Name = name;
             Players = new List<Player>();
             Tactic = Tactic.Balanced;
             Points = 0;
+            Budget = 100000000; // Initial budget of 1 million
         }
 
         public void AddPlayer(Player player)
@@ -101,6 +103,8 @@ namespace FootballManager.Classes
                 .ThenByDescending(player => player.Rating)
                 .ToList();
 
+            Players = sortedPlayers;
+
             Console.WriteLine($"{Name.ToUpper()} squad:");
             for (int i = 0; i < sortedPlayers.Count; i++)
             {
@@ -109,7 +113,38 @@ namespace FootballManager.Classes
             }
         }
 
+        public bool BuyPlayer(Player player, Club sellingClub)
+        {
+            if (player == null || sellingClub == null) return false;
+
+            if (Budget >= player.Value)
+            {
+                // Transfer money
+                Budget -= player.Value;
+                sellingClub.Budget += player.Value;
+
+                // Move player
+                sellingClub.RemovePlayer(player);
+                AddPlayer(player);
+
+                Console.WriteLine($"{Name} bought {player.Name} from {sellingClub.Name} for £{player.Value:N0}.");
+                return true;
+            }
+
+            Console.WriteLine($"{Name} cannot afford {player.Name}.");
+            return false;
+        }
+
+        public bool SellPlayer(Player player, Club buyingClub)
+        {
+            if (player == null || buyingClub == null) return false;
+            return buyingClub.BuyPlayer(player, this);
+        }
+
+
+
     }
+
     enum Tactic
     {
         Defensive,
