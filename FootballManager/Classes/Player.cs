@@ -19,17 +19,24 @@ namespace FootballManager.Classes
         public int Goalkeeping { get; set; }
         public string Position { get; set; }
 
-        public Player(string firstName, string lastName, int age, string club, string country, int shooting, int pace, int
-            strength, int passing, int goalkeeping, string position, int contract)
-            : base(firstName, lastName, age, country)
+        public int Value { get; set; }
+        public int Contract { get; set; }
+
+
+        public Player(string firstName, string lastName, int age, string country,
+    int shooting, int pace, int strength, int passing, int goalkeeping, string position, int contract)
+    : base(firstName, lastName, age, country)
         {
+            Random rand = new Random();
             Shooting = shooting;
             Pace = pace;
             Strength = strength;
             Passing = passing;
             Goalkeeping = goalkeeping;
             Position = position;
+            Contract = contract;
             CalculateRating();
+            CalculateValue();
         }
 
         private void CalculateRating()
@@ -58,6 +65,32 @@ namespace FootballManager.Classes
                     Rating = (Shooting + Pace + Strength + Passing + Goalkeeping) / 5;
                     break;
             }
+        }
+
+        private void CalculateValue()
+        {
+            Random rand = new Random();
+            if (Rating == 5)
+            {
+                Value = rand.Next(50000000, 100000000);
+            }
+            else if (Rating == 4)
+            {
+                Value = rand.Next(25000000, 50000000);
+            }
+            else if (Rating == 3)
+            {
+                Value = rand.Next(10000000, 25000000);
+            }
+            else if (Rating == 2)
+            {
+                Value = rand.Next(1000000, 10000000);
+            }
+            else
+            {
+                Value = rand.Next(100000, 1000000);
+            }
+            Value = (int)(Math.Round(Value / 500000.0) * 500000); // Round to nearest 500,000
         }
 
         public void ShowInfo()
