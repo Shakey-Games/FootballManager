@@ -34,7 +34,7 @@ namespace FootballManager
             //    //GameWeek++;
             //}
             Console.ReadLine();
-        }
+        } //a
 
         static void PlaySeason()
         {
